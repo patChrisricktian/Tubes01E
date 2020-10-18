@@ -3,6 +3,7 @@ package com.example.tubes01e;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -127,6 +128,9 @@ public class MainActivity extends AppCompatActivity implements FragmentListener 
             }
         }
         ft.commit();
+
+        //ref: https://www.11zon.com/zon/android/onclick-event-in-navigation-drawer.php
+        this.mainDrawer.closeDrawer(GravityCompat.START);
     }
 
     @Override
