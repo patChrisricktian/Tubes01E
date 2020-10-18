@@ -1,4 +1,29 @@
 <resources>
     <string name="app_name">Tubes01E</string>
     <string name="ma_text">"Another change for demonstration!"</string>
+    <string name="fragment_main_text">"Main Fragment"</string>
+
+    <!--Drawer's Strings-->
+    <string name="open_drawer">Open</string>
+    <string name="close_drawer">Close</string>
+
+    <!--Navigation Fragment's Strings-->
+    <string name="btn_home_text">Home</string>
+    <string name="btn_random_search_text">Cari</string>
+    <string name="btn_menu_text">Menu</string>
+    <string name="btn_setting_text">Settings</string>
+    <string name="btn_exit_text">Exit</string>
+
+
+    <!--Random Search Fragment's Strings-->
+    <string name="fragment_random_search_text">Fragment Random Search</string>
+
+
+    <!--Menu List Fragment's Strings-->
+    <string name="fragment_menu_list_text">Fragment Menu List</string>
+
+    <!--Menu List Fragment's Strings-->
+    <string name="fragment_setting_text">Fragment Setting</string>
+
+
 </resources>
