@@ -2,6 +2,7 @@
     <string name="app_name">Tubes01E</string>
     <string name="ma_text">"Another change for demonstration!"</string>
     <string name="fragment_main_text">"Main Fragment"</string>
+    <string name="dummy_text">"Dummy text!"</string>
 
     <!--Drawer's Strings-->
     <string name="open_drawer">Open</string>

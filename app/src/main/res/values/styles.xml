@@ -9,4 +9,10 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="BackGroundImageView">
+        <item name="android:alpha">0.85</item>
+        <item name="android:scaleType">centerCrop</item>
+        <item name="android:src">@mipmap/dummy_food_image</item>
+    </style>
+
 </resources>
