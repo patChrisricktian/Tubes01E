@@ -17,11 +17,13 @@ import java.util.List;
 public class MenuListFragment extends Fragment {
     private ListView list;
     private FragmentListener listener;
+    private MainActivity ui;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         FragmentMenuListBinding binding = FragmentMenuListBinding.inflate(getLayoutInflater());
         final View view = binding.getRoot();
         this.list = binding.menuList;
+        this.list.setAdapter(this.ui.getPresenter().getMenuListAdapter());
         return view;
     }
 
@@ -30,9 +32,16 @@ public class MenuListFragment extends Fragment {
         super.onAttach(context);
         if(context instanceof FragmentListener){
             this.listener = (FragmentListener) context;
+            if(context instanceof MainActivity){
+                this.ui = (MainActivity) context;
+            }
         }else{
             throw new ClassCastException(context.toString()+" must implement FragmentListener");
         }
+    }
+
+    public ListView getListView(){
+        return this.list;
     }
 
 }

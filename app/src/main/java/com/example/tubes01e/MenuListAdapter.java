@@ -1,5 +1,6 @@
 package com.example.tubes01e;
 
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -42,12 +43,24 @@ public class MenuListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        return null;
+        ViewHolder viewHolder;
+
+        if(convertView == null){
+            convertView = LayoutInflater.from(this.activity).inflate(R.layout.menu_item, parent, false);
+            viewHolder = new ViewHolder(convertView);
+            convertView.setTag(viewHolder);
+        }else{
+            viewHolder = (ViewHolder) convertView.getTag();
+        }
+
+        viewHolder.updateView((Menu) this.menuList.get(position));
+        return convertView;
     }
 
     protected class ViewHolder{
         protected TextView tvFoodName;
         protected ImageView foodImage;
+        protected int position;
 
         public ViewHolder(View view){
             this.tvFoodName = view.findViewById(R.id.tv_food_name);
@@ -56,6 +69,7 @@ public class MenuListAdapter extends BaseAdapter {
 
         public void updateView(Menu menu){
             //To be implemented
+            this.tvFoodName.setText(menu.getName());
         }
     }
 }

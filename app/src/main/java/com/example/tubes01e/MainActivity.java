@@ -9,11 +9,15 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.widget.ListView;
 
 import com.example.tubes01e.databinding.ActivityMainBinding;
+import com.example.tubes01e.databinding.FragmentMenuListBinding;
+
+import java.util.List;
 
 
-public class MainActivity extends AppCompatActivity implements FragmentListener {
+public class MainActivity extends AppCompatActivity implements FragmentListener, MainActivityPresenter.MenuListView {
     private DrawerLayout mainDrawer;
     private MainFragment mainFragment;
     private RandomSearchFragment randomSearchFragment;
@@ -21,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements FragmentListener 
     private SettingFragment settingFragment;
     private Toolbar toolbar;
     private FragmentManager fragmentManager;
+    private MainActivityPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +37,8 @@ public class MainActivity extends AppCompatActivity implements FragmentListener 
         this.randomSearchFragment = new RandomSearchFragment();
         this.menuListFragment = new MenuListFragment();
         this.settingFragment = new SettingFragment();
+
+        this.presenter = new MainActivityPresenter(this);
 
 
         this.mainDrawer = binding.drawerLayout;
@@ -45,8 +52,12 @@ public class MainActivity extends AppCompatActivity implements FragmentListener 
         this.mainDrawer.addDrawerListener(abdt);
         abdt.syncState();
         setContentView(binding.getRoot());
-
+        this.presenter.loadData();
         this.changePage(1);
+    }
+
+    public MainActivityPresenter getPresenter(){
+        return this.presenter;
     }
 
     @Override
@@ -137,5 +148,9 @@ public class MainActivity extends AppCompatActivity implements FragmentListener 
     public void closeApplication() {
         this.moveTaskToBack(true);
         this.finish();
+    }
+
+    public void updateMenuList(List<Menu> menus){
+        this.presenter.getMenuListAdapter().setMenuList(menus);
     }
 }
