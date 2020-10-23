@@ -26,5 +26,7 @@
     <!--Menu List Fragment's Strings-->
     <string name="fragment_setting_text">Fragment Setting</string>
 
+    <!--Main Fragment's Strings-->
+    <string name="btn_cari">Cari</string>
 
 </resources>
