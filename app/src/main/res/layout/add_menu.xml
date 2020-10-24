@@ -1,107 +1,146 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Tambah Menu"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="105dp"
-        android:textSize="30dp"
-        >
-    </TextView>
-
-    <TextView
-        android:id="@+id/tv_nama_makanan"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Nama Makanan"
-        android:layout_marginTop="40dp"
-        android:layout_marginLeft="20dp"
-        android:textSize="18dp"
-        >
-    </TextView>
-
-    <EditText
-        android:id="@+id/et_nama_makanan"
-        android:layout_height="wrap_content"
-        android:layout_width="200dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
-        android:hint="Soto Ayam"
-        >
-    </EditText>
-
-    <TextView
-        android:id="@+id/tv_tag"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Tag"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
-        android:textSize="20dp"
-        >
-    </TextView>
-
-    <EditText
-        android:id="@+id/et_tag"
-        android:layout_height="wrap_content"
-        android:layout_width="200dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
-        android:hint="kuah,asin,ayam"
-        >
-    </EditText>
-
-    <RadioGroup
-        android:id="@+id/btn_radio"
+    <!--https://www.geeksforgeeks.org/nestedscrollview-in-android-with-example/-->
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/ll_makanan_detail"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="40dp">
-        <RadioButton android:id="@+id/resep"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Ada resep"
-            android:onClick="onRadioButtonClicked"/>
-        <RadioButton android:id="@+id/tersedia_restoran"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tersedia di Restoran"
-            android:onClick="onRadioButtonClicked"/>
-    </RadioGroup>
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:fillViewport="true"
+        android:visibility="visible">
 
-    <TextView
-        android:id="@+id/tv_resep"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Resep"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
-        android:textSize="20dp"
-        >
-    </TextView>
-
-    <EditText
-        android:id="@+id/et_resep"
-        android:layout_height="180dp"
-        android:layout_width="300dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
-        >
-    </EditText>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
 
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tambah Menu"
+                android:textSize="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:textAlignment="center"
+                android:background="@drawable/tv_border"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_nama_makanan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nama Makanan"
+                    android:layout_marginTop="40dp"
+                    android:textSize="18sp"/>
+
+                <EditText
+                    android:id="@+id/et_nama_makanan"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:hint="Soto Ayam"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_deskripsi_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:text="@string/tv_deskripsi_detail_text"
+                    android:textSize="18sp" />
+                <EditText
+                    android:id="@+id/et_deskripsi_edit"
+                    android:layout_height="wrap_content"
+                    android:layout_width="200dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:hint="kuah,asin,ayam"/>
+
+                <TextView
+                    android:id="@+id/tv_tag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/tv_tag_detail_text"
+                    android:textSize="20sp" />
+
+                <EditText
+                    android:id="@+id/et_tag"
+                    android:layout_height="wrap_content"
+                    android:layout_width="200dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:hint="kuah,asin,ayam"/>
+
+                <RadioGroup
+                    android:id="@+id/btn_radio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="20dp"
+                    android:checkedButton="@id/et_resep">
+                    <RadioButton android:id="@+id/radio_resep"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ada resep"/>
+                    <RadioButton android:id="@+id/radio_tersedia_restoran"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tersedia di Restoran"/>
+                </RadioGroup>
+
+                <TextView
+                    android:id="@+id/tv_resep"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/tv_resep_detail_text"
+                    android:textSize="20sp" />
+
+                <EditText
+                    android:id="@+id/et_resep"
+                    android:layout_height="180dp"
+                    android:layout_width="300dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="20dp"/>
 
 
+            </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:layout_marginBottom="50dp"
+                android:orientation="horizontal"
+                android:gravity="center">
+                <Button
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="Tambah"
+                    android:backgroundTint="@color/colorGreen"
+                    android:textAlignment="center"/>
+                <Button
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="Batal"
+                    android:backgroundTint="@color/colorRed"
+                    android:textAlignment="center"/>
+            </LinearLayout>
+        </LinearLayout>
 
-</LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</RelativeLayout>

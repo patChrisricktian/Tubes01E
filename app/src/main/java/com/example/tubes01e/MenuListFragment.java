@@ -11,11 +11,13 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.example.tubes01e.databinding.FragmentMenuListBinding;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
-public class MenuListFragment extends Fragment {
+public class MenuListFragment extends Fragment implements View.OnClickListener {
     private ListView list;
+    private FloatingActionButton btnAdd;
     private FragmentListener listener;
     private MainActivity ui;
 
@@ -24,6 +26,8 @@ public class MenuListFragment extends Fragment {
         final View view = binding.getRoot();
         this.list = binding.menuList;
         this.list.setAdapter(this.ui.getPresenter().getMenuListAdapter());
+        this.btnAdd = (FloatingActionButton) binding.floatingAddBtn;
+        this.btnAdd.setOnClickListener(this);
         return view;
     }
 
@@ -44,4 +48,10 @@ public class MenuListFragment extends Fragment {
         return this.list;
     }
 
+    @Override
+    public void onClick(View v) {
+        if(v == this.btnAdd){
+            ui.changePage(FragmentType.FRAGMENT_ADD_MENU);
+        }
+    }
 }

@@ -5,15 +5,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ListView;
 
 import com.example.tubes01e.databinding.ActivityMainBinding;
 import com.example.tubes01e.databinding.FragmentMenuListBinding;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 
@@ -23,121 +28,111 @@ public class MainActivity extends AppCompatActivity implements FragmentListener,
     private RandomSearchFragment randomSearchFragment;
     private MenuListFragment menuListFragment;
     private SettingFragment settingFragment;
+    private AddMenuFragment addMenuFragment;
+    private MenuDetailFragment menuDetailFragment;
+
     private Toolbar toolbar;
     private FragmentManager fragmentManager;
     private MainActivityPresenter presenter;
+    private ArrayList<Fragment> fragments;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
+        this.fragments = new ArrayList<>();
 
         this.mainFragment = new MainFragment();
+        this.fragments.add(mainFragment);
+
         this.randomSearchFragment = new RandomSearchFragment();
+        this.fragments.add(randomSearchFragment);
+
         this.menuListFragment = new MenuListFragment();
+        this.fragments.add(this.menuListFragment);
+
         this.settingFragment = new SettingFragment();
+        this.fragments.add(this.settingFragment);
+
+        this.addMenuFragment = new AddMenuFragment();
+        this.fragments.add(this.addMenuFragment);
+
+        this.menuDetailFragment = new MenuDetailFragment();
+        this.fragments.add(this.menuDetailFragment);
 
         this.presenter = new MainActivityPresenter(this);
 
-
         this.mainDrawer = binding.drawerLayout;
-
         this.toolbar = binding.toolbar;
         this.setSupportActionBar(toolbar);
+        ActionBarDrawerToggle abdt = new ActionBarDrawerToggle(this, mainDrawer, toolbar, R.string.open_drawer, R.string.close_drawer);
+        this.mainDrawer.addDrawerListener(abdt);
+        abdt.syncState();
 
         this.fragmentManager = this.getSupportFragmentManager();
 
-        ActionBarDrawerToggle abdt  = new ActionBarDrawerToggle(this, mainDrawer, toolbar, R.string.open_drawer, R.string.close_drawer);
-        this.mainDrawer.addDrawerListener(abdt);
-        abdt.syncState();
         setContentView(binding.getRoot());
+
         this.presenter.loadData();
-        this.changePage(1);
+        this.changePage(FragmentType.FRAGMENT_HOME);
     }
 
-    public MainActivityPresenter getPresenter(){
+    public MainActivityPresenter getPresenter() {
         return this.presenter;
     }
 
     @Override
-    public void changePage(int page) {
+    public void changePage(FragmentType page) {
         FragmentTransaction ft = this.fragmentManager.beginTransaction();
         ft.setCustomAnimations(R.anim.fade_in, R.anim.slide_out);
-        if( page == 1){
-            if(this.mainFragment.isAdded()){
-                ft.show(this.mainFragment);
-            }else{
-                ft.add(R.id.fragment_container, this.mainFragment);
-            }
 
-            if(this.randomSearchFragment.isAdded()){
-                ft.hide(this.randomSearchFragment);
-            }
+        Fragment selectedFragment;
 
-            if(this.menuListFragment.isAdded()){
-                ft.hide(this.menuListFragment);
-            }
+        switch (page) {
+            case FRAGMENT_HOME:
+                selectedFragment = this.mainFragment;
+                break;
+            case FRAGMENT_RANDOM_SEARCH:
+                selectedFragment = this.randomSearchFragment;
+                break;
+            case FRAGMENT_SETTING:
+                selectedFragment = this.settingFragment;
+                break;
+            case FRAGMENT_MENU_LIST:
+                selectedFragment = this.menuListFragment;
+                break;
+            case FRAGMENT_ADD_MENU:
+                selectedFragment = this.addMenuFragment;
+                break;
+            case FRAGMENT_MENU_DETAIL:
+                selectedFragment = this.menuDetailFragment;
+                break;
+            default:
+                selectedFragment = this.mainFragment;
+        }
 
-            if(this.settingFragment.isAdded()){
-                ft.hide(this.settingFragment);
-            }
+        Log.d("debug", "fr.getclass.getName:" + selectedFragment.getClass().getName());
 
-        }else if( page == 2){
-            if(this.randomSearchFragment.isAdded()){
-                ft.show(this.randomSearchFragment);
-            }else{
-                ft.add(R.id.fragment_container, this.randomSearchFragment);
-            }
+        if (selectedFragment.isAdded()) {
+            ft.show(selectedFragment);
+        } else {
+            ft.add(R.id.fragment_container, selectedFragment);
+        }
 
-            if(this.mainFragment.isAdded()){
-                ft.hide(this.mainFragment);
-            }
+        Iterator<Fragment> iterator = this.fragments.iterator();
+        while (iterator.hasNext()) {
+            Fragment fragment = iterator.next();
+//            Log.d("debug", "loop getclass.getName:"+fragment.getClass().getName());
+//            Log.d("debug", "loop compare getclass.getName:"+ (fragment.getClass().getSimpleName().equals(selectedFragment.getClass().getSimpleName())+"\n"));
 
-            if(this.menuListFragment.isAdded()){
-                ft.hide(this.menuListFragment);
-            }
-
-            if(this.settingFragment.isAdded()){
-                ft.hide(this.settingFragment);
-            }
-        }else if( page == 3){
-            if(this.menuListFragment.isAdded()){
-                ft.show(this.menuListFragment);
-            }else{
-                ft.add(R.id.fragment_container, this.menuListFragment);
-            }
-
-            if(this.mainFragment.isAdded()){
-                ft.hide(this.mainFragment);
-            }
-
-            if(this.randomSearchFragment.isAdded()){
-                ft.hide(this.randomSearchFragment);
-            }
-
-            if(this.settingFragment.isAdded()){
-                ft.hide(this.settingFragment);
-            }
-        }else if( page == 4){
-            if(this.settingFragment.isAdded()){
-                ft.show(this.settingFragment);
-            }else{
-                ft.add(R.id.fragment_container, this.settingFragment);
-            }
-
-            if(this.mainFragment.isAdded()){
-                ft.hide(this.mainFragment);
-            }
-
-            if(this.menuListFragment.isAdded()){
-                ft.hide(this.menuListFragment);
-            }
-
-            if(this.randomSearchFragment.isAdded()){
-                ft.hide(this.randomSearchFragment);
+            if (fragment.getClass().getName().equals(selectedFragment.getClass().getName()))
+                continue;
+            if (fragment.isAdded()) {
+                ft.hide(fragment);
             }
         }
+
         ft.commit();
 
         //ref: https://www.11zon.com/zon/android/onclick-event-in-navigation-drawer.php
@@ -150,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements FragmentListener,
         this.finish();
     }
 
-    public void updateMenuList(List<Menu> menus){
+    public void updateMenuList(List<Menu> menus) {
         this.presenter.getMenuListAdapter().setMenuList(menus);
     }
 }

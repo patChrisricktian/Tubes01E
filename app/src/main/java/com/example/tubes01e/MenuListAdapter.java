@@ -7,6 +7,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.fragment.app.Fragment;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,6 +51,14 @@ public class MenuListAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(this.activity).inflate(R.layout.menu_item, parent, false);
             viewHolder = new ViewHolder(convertView);
             convertView.setTag(viewHolder);
+
+            viewHolder.foodImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    activity.changePage(FragmentType.FRAGMENT_MENU_DETAIL);
+                }
+            });
+
         }else{
             viewHolder = (ViewHolder) convertView.getTag();
         }

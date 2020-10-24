@@ -2,6 +2,7 @@ package com.example.tubes01e;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,13 +15,13 @@ import androidx.fragment.app.Fragment;
 import com.example.tubes01e.databinding.AddMenuBinding;
 import com.example.tubes01e.databinding.FragmentMainBinding;
 
-public class AddMenuFragment extends Fragment {
-    private TextView tv_Text1;
-    private TextView tv_Text2;
-    private TextView tv_Text3;
-    private TextView tv_Text4;
-    private RadioButton rBtn1;
-    private RadioButton rBtn2;
+public class AddMenuFragment extends Fragment implements View.OnClickListener {
+    private TextView tvTitle;
+    private TextView tvNamaMakanan;
+    private TextView tvTag;
+    private TextView tvResep;
+    private RadioButton radioResep;
+    private RadioButton radioTersediaRestoran;
     private EditText et1;
     private EditText et2;
     private  EditText et3;
@@ -29,16 +30,26 @@ public class AddMenuFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         AddMenuBinding binding = AddMenuBinding.inflate(getLayoutInflater());
         final View view = binding.getRoot();
-        this.tv_Text1 = binding.tvTitle;
-        this.tv_Text2 = binding.tvNamaMakanan;
-        this.tv_Text3 = binding.tvTag;
-        this.tv_Text4 = binding.tvResep;
-        this.rBtn1 = binding.resep;
-        this.rBtn2 = binding.tersediaRestoran;
+        this.tvTitle = binding.tvTitle;
+        this.tvNamaMakanan = binding.tvNamaMakanan;
+        this.tvTag = binding.tvTag;
+        this.tvResep = binding.tvResep;
+        this.radioResep = binding.radioResep;
+        this.radioResep.setOnClickListener(this);
+        this.radioTersediaRestoran = binding.radioTersediaRestoran;
+        this.radioTersediaRestoran.setOnClickListener(this);
         this.et1 = binding.etNamaMakanan;
         this.et2 = binding.etTag;
         this.et3 = binding.etResep;
+
+
+
+
         return view;
+    }
+
+    public void onRadioButtonClicked(View v){
+        Log.d("debug", "radio button clicked!");
     }
 
 
@@ -51,4 +62,12 @@ public class AddMenuFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onClick(View v) {
+        if(v == this.radioResep){
+            Log.d("debug", "radio resep button clicked!");
+        }else if(v == this.radioTersediaRestoran){
+            Log.d("debug", "radio restoran button clicked!");
+        }
+    }
 }

@@ -54,13 +54,13 @@ public class NavigationFragment extends Fragment implements View.OnClickListener
     @Override
     public void onClick(View v) {
         if( v == this.btnHome){
-            this.listener.changePage(1);
+            this.listener.changePage(FragmentType.FRAGMENT_HOME);
         }else if (v == this.btnRandomSearch){
-            this.listener.changePage(2);
+            this.listener.changePage(FragmentType.FRAGMENT_RANDOM_SEARCH);
         }else if (v == this.btnMenuList){
-            this.listener.changePage(3);
+            this.listener.changePage(FragmentType.FRAGMENT_MENU_LIST);
         }else if (v == this.btnSetting){
-            this.listener.changePage(4);
+            this.listener.changePage(FragmentType.FRAGMENT_SETTING);
         }else if(v == this.btnExit){
             this.listener.closeApplication();
         }
