@@ -63,7 +63,10 @@ public class MenuListAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        viewHolder.updateView((Menu) this.menuList.get(position));
+        if(this.menuList.size() > 0){
+            viewHolder.updateView((Menu) this.menuList.get(position));
+        }
+
         return convertView;
     }
 

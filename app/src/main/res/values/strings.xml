@@ -44,4 +44,14 @@ Faucibus interdum posuere lorem ipsum dolor. Sed odio morbi quis commodo odio ae
     <!--Main Fragment's Strings-->
     <string name="btn_cari">Cari</string>
 
+    <!--Add Menu's String-->
+    <string name="placeholder_nama_makanan">Soto Ayam</string>
+    <string name="placeholder_deksripsi">Soto ayam adalah makanan khas Indonesia yang berupa sejenis sup ayam dengan kuah yang berwarna kekuningan.</string>
+    <string name="placeholder_tags">kuah kuning, asin, ayam</string>
+    <string name="tv_radio_restoran">Tersedia di restoran</string>
+    <string name="tv_radio_resep">Ada resep</string>
+
+    <string name="btn_tambah_text">Tambah</string>
+    <string name="btn_batal_text">Batal</string>
+
 </resources>

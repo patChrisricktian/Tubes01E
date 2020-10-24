@@ -148,4 +148,11 @@ public class MainActivity extends AppCompatActivity implements FragmentListener,
     public void updateMenuList(List<Menu> menus) {
         this.presenter.getMenuListAdapter().setMenuList(menus);
     }
+    public boolean addMenu(String name, String description, String tag, boolean hasRecipe, String recipe){
+        return this.presenter.addMenu( name,  description, tag,  hasRecipe,  recipe);
+    }
+
+    public void setMenuListAdapter(ListView listView){
+        listView.setAdapter(this.presenter.getMenuListAdapter());
+    }
 }

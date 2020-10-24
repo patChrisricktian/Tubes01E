@@ -19,13 +19,12 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
     private ListView list;
     private FloatingActionButton btnAdd;
     private FragmentListener listener;
-    private MainActivity ui;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         FragmentMenuListBinding binding = FragmentMenuListBinding.inflate(getLayoutInflater());
         final View view = binding.getRoot();
         this.list = binding.menuList;
-        this.list.setAdapter(this.ui.getPresenter().getMenuListAdapter());
+        this.listener.setMenuListAdapter(this.list);
         this.btnAdd = (FloatingActionButton) binding.floatingAddBtn;
         this.btnAdd.setOnClickListener(this);
         return view;
@@ -36,9 +35,6 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
         super.onAttach(context);
         if(context instanceof FragmentListener){
             this.listener = (FragmentListener) context;
-            if(context instanceof MainActivity){
-                this.ui = (MainActivity) context;
-            }
         }else{
             throw new ClassCastException(context.toString()+" must implement FragmentListener");
         }
@@ -51,7 +47,7 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if(v == this.btnAdd){
-            ui.changePage(FragmentType.FRAGMENT_ADD_MENU);
+            this.listener.changePage(FragmentType.FRAGMENT_ADD_MENU);
         }
     }
 }
