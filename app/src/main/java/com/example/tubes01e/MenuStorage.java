@@ -44,7 +44,7 @@ public class MenuStorage {
                     object.put("name", menu.getName());
                     object.put("description", menu.getDescription());
                     object.put("tags", menu.getTag());
-                    object.put("hasRecipe",String.format("%s",  menu.hasRecipe()));
+                    object.put("hasRecipe", String.format("%s", menu.hasRecipe()));
                     object.put("recipe", menu.getRecipe());
 
                     String jsonString = object.toString();
@@ -68,7 +68,7 @@ public class MenuStorage {
                 e.printStackTrace();
             }
         }
-    return isSuccess;
+        return isSuccess;
     }
 
     public boolean writeMenu(File file, Menu menu, int counter) {
@@ -77,15 +77,13 @@ public class MenuStorage {
             File fileToBeWrittenInto = file;
             File parentDir = new File(fileToBeWrittenInto.getParent());
             try {
-
                 if (parentDir.isDirectory()) {
-
                     JSONObject object = new JSONObject();
                     object.put("id", menu.getId());
                     object.put("name", menu.getName());
                     object.put("description", menu.getDescription());
                     object.put("tags", menu.getTag());
-                    object.put("hasRecipe",String.format("%s",  menu.hasRecipe()));
+                    object.put("hasRecipe", String.format("%s", menu.hasRecipe()));
                     object.put("recipe", menu.getRecipe());
 
                     String jsonString = object.toString();
@@ -141,7 +139,7 @@ public class MenuStorage {
                     String recipe = jsonObject.get("recipe").toString();
 
                     boolean hasRecipe = false;
-                    if(hasRecipeStr.equals("true")){
+                    if (hasRecipeStr.equals("true")) {
                         hasRecipe = true;
                     }
 
@@ -156,72 +154,73 @@ public class MenuStorage {
     }
 
     public Menu getMenu(File file) {
-            try {
-                if (file.exists()) {
-                    FileReader fileReader = new FileReader(file);
-                    BufferedReader bufferedReader = new BufferedReader(fileReader);
-                    StringBuilder builder = new StringBuilder();
-                    String line = bufferedReader.readLine();
+        try {
+            if (file.exists()) {
+                FileReader fileReader = new FileReader(file);
+                BufferedReader bufferedReader = new BufferedReader(fileReader);
+                StringBuilder builder = new StringBuilder();
+                String line = bufferedReader.readLine();
 
-                    while (line != null) {
-                        builder.append(line).append("\n");
-                        line = bufferedReader.readLine();
-                    }
-                    bufferedReader.close();
-
-                    String response = builder.toString();
-                    JSONObject jsonObject = new JSONObject(response);
-
-                    String menuID = jsonObject.get("id").toString();
-                    String nama = jsonObject.get("name").toString();
-                    String description = jsonObject.get("description").toString();
-                    String tags = jsonObject.get("tags").toString();
-                    String hasRecipeStr = jsonObject.get("hasRecipe").toString();
-                    String recipe = jsonObject.get("recipe").toString();
-
-                    boolean hasRecipe = false;
-                    if(hasRecipeStr.equals("true")){
-                        hasRecipe = true;
-                    }
-
-                    Menu menu = new Menu(menuID, nama, description, tags, hasRecipe, recipe);
-                    return menu;
+                while (line != null) {
+                    builder.append(line).append("\n");
+                    line = bufferedReader.readLine();
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
+                bufferedReader.close();
+
+                String response = builder.toString();
+                JSONObject jsonObject = new JSONObject(response);
+
+                String menuID = jsonObject.get("id").toString();
+                String nama = jsonObject.get("name").toString();
+                String description = jsonObject.get("description").toString();
+                String tags = jsonObject.get("tags").toString();
+                String hasRecipeStr = jsonObject.get("hasRecipe").toString();
+                String recipe = jsonObject.get("recipe").toString();
+
+                boolean hasRecipe = false;
+                if (hasRecipeStr.equals("true")) {
+                    hasRecipe = true;
+                }
+
+                Menu menu = new Menu(menuID, nama, description, tags, hasRecipe, recipe);
+                return menu;
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         return null;
     }
 
-    public ArrayList<Menu> getAllMenu(){
-        ArrayList<Menu>  list = new ArrayList<>();;
+    public ArrayList<Menu> getAllMenu() {
+        ArrayList<Menu> list = new ArrayList<>();
+        ;
         File parentDir = new File(this.context.getFilesDir() + FOOD_DIR);
 
-        if(parentDir.isDirectory()){
+        if (parentDir.isDirectory()) {
 
             File[] children = parentDir.listFiles();
 
-            if(children != null){
-                for(File childFile : children){
-                    if(! childFile.isDirectory()){
+            if (children != null) {
+                for (File childFile : children) {
+                    if (!childFile.isDirectory()) {
                         Menu menu = getMenu(childFile);
-                        if(menu != null) {
+                        if (menu != null) {
                             Log.d("debug", menu.toString());
-                        }else{
+                        } else {
                             Log.d("debug", "null");
                         }
                         list.add(menu);
                     }
                 }
             }
-        }else{
-            Log.d("debug","No menu exist.");
+        } else {
+            Log.d("debug", "No menu exist.");
         }
         return list;
     }
 
-    public boolean writeWithIntegrityCheck(String name, String description, String tag, boolean hasRecipe, String recipe){
+    public boolean writeWithIntegrityCheck(String name, String description, String tag, boolean hasRecipe, String recipe) {
         boolean isGood = false;
         Date currentTime = Calendar.getInstance().getTime();
         Calendar c = Calendar.getInstance();
@@ -229,12 +228,12 @@ public class MenuStorage {
         int month = c.get(Calendar.MONTH);
         int year = c.get(Calendar.YEAR);
 
-        if(name.length() > 0 && description.length() > 0 && tag.length() > 0){
+        if (name.length() > 0 && description.length() > 0 && tag.length() > 0) {
             boolean recipeReqPassed = true;
-            Log.d("debug", "recipe length:"+recipe.length()+", recipe: "+recipe);
+            Log.d("debug", "recipe length:" + recipe.length() + ", recipe: " + recipe);
 
-            String id= "food-"+FOOD_ID_COUNTER+"-"+ month+"-"+year+"-"+c.get(Calendar.HOUR)+"-"+c.get(Calendar.MINUTE);
-            FOOD_ID_COUNTER = FOOD_ID_COUNTER+1;
+            String id = "food-" + FOOD_ID_COUNTER + "-" + month + "-" + year + "-" + c.get(Calendar.HOUR) + "-" + c.get(Calendar.MINUTE);
+            FOOD_ID_COUNTER = FOOD_ID_COUNTER + 1;
             Menu menu = new Menu(id, name, description, tag, hasRecipe, recipe);
             isGood = this.writeMenu(menu, 0);
         }
@@ -242,16 +241,37 @@ public class MenuStorage {
         return isGood;
     }
 
-    public boolean editWithIntegrityCheck(String id, String name, String description, String tag, boolean hasRecipe, String recipe){
+    public boolean editWithIntegrityCheck(String id, String name, String description, String tag, boolean hasRecipe, String recipe) {
         boolean isGood = false;
         File contextFilesDir = this.context.getFilesDir();
-        File file = new File(contextFilesDir, "//"+FOOD_DIR+"//"+id+".json");
-        if(name.length() > 0 && description.length() > 0 && tag.length() > 0){
+        File file = new File(contextFilesDir, "//" + FOOD_DIR + "//" + id + ".json");
+        if (name.length() > 0 && description.length() > 0 && tag.length() > 0) {
             boolean recipeReqPassed = true;
-            Log.d("debug", "recipe length:"+recipe.length()+", recipe: "+recipe);
+            Log.d("debug", "recipe length:" + recipe.length() + ", recipe: " + recipe);
             Menu menu = new Menu(id, name, description, tag, hasRecipe, recipe);
             isGood = this.writeMenu(file, menu, 0);
         }
         return isGood;
+    }
+
+    public boolean deleteMenu(String id) {
+        boolean isSuccess = false;
+        File parentDir = new File(this.context.getFilesDir() + FOOD_DIR);
+        try {
+            if (parentDir.isDirectory()) {
+                File fileToBeDeleted = new File(parentDir + "//" + id + ".json");
+                if (fileToBeDeleted.exists()) {
+                    if (fileToBeDeleted.delete()) {
+                        isSuccess = true;
+                    }
+                }
+            } else {
+                Log.d("debug", "Directory not exist");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return isSuccess;
     }
 }

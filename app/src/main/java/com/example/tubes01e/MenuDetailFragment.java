@@ -28,7 +28,7 @@ public class MenuDetailFragment extends Fragment implements View.OnClickListener
     private FragmentListener listener;
     private MainActivity activity;
 
-    public static MenuDetailFragment newInstance(Bundle args){
+    public static MenuDetailFragment newInstance(Bundle args) {
         MenuDetailFragment fragment = new MenuDetailFragment();
         fragment.setArguments(args);
         return fragment;
@@ -69,8 +69,6 @@ public class MenuDetailFragment extends Fragment implements View.OnClickListener
                 this.tvResepDetailChild.setText(recipe);
             }
         }
-
-
         return view;
     }
 
@@ -96,7 +94,9 @@ public class MenuDetailFragment extends Fragment implements View.OnClickListener
             this.activity.fragments.add(this.activity.menuEditFragment);
             this.listener.changePage(FragmentType.FRAGMENT_EDIT_MENU);
         } else if (v == this.floatingDeleteBtn) {
-
+            Bundle args = getArguments();
+            DeleteDialogFagment dialog = DeleteDialogFagment.newInstance(args);
+            dialog.show(getFragmentManager(), dialog.getTag());
         }
     }
 }

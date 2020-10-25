@@ -163,6 +163,10 @@ public class MainActivity extends AppCompatActivity implements FragmentListener,
         return this.presenter.editMenu( id, name,  description, tag,  hasRecipe,  recipe);
     }
 
+    public boolean deleteMenu(String id){
+        return this.presenter.deleteMenu(id);
+    }
+
     public void setMenuListAdapter(ListView listView){
         listView.setAdapter(this.presenter.getMenuListAdapter());
     }

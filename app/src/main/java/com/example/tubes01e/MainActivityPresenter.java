@@ -43,6 +43,15 @@ public class MainActivityPresenter {
         return isSuccess;
     }
 
+    public boolean deleteMenu(String id){
+        boolean isSuccess = this.menuStorageHandler.deleteMenu(id);
+        if(isSuccess){
+            this.menus = this.menuStorageHandler.getAllMenu();
+            this.ui.updateMenuList(menus);
+        }
+        return isSuccess;
+    }
+
     public MenuListAdapter getMenuListAdapter() {
         return this.menuListAdapter;
     }

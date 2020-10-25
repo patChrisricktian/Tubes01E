@@ -58,4 +58,10 @@ Faucibus interdum posuere lorem ipsum dolor. Sed odio morbi quis commodo odio ae
     <string name="fragment_menu_edit_text">Edit Menu</string>
     <string name="btn_simpan_text">Simpan</string>
 
+    <!--Delete Dialog's String-->
+    <string name="delete_confirmation_text">Apakah anda ingin menghapus menu ini?</string>
+    <string name="dialog_btn_yes_text">Ya</string>
+    <string name="dialog_btn_cancel_text">Tidak</string>
+
+
 </resources>
