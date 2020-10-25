@@ -71,6 +71,47 @@ public class MenuStorage {
     return isSuccess;
     }
 
+    public boolean writeMenu(File file, Menu menu, int counter) {
+        boolean isSuccess = false;
+        if (counter < 2) {
+            File fileToBeWrittenInto = file;
+            File parentDir = new File(fileToBeWrittenInto.getParent());
+            try {
+
+                if (parentDir.isDirectory()) {
+
+                    JSONObject object = new JSONObject();
+                    object.put("id", menu.getId());
+                    object.put("name", menu.getName());
+                    object.put("description", menu.getDescription());
+                    object.put("tags", menu.getTag());
+                    object.put("hasRecipe",String.format("%s",  menu.hasRecipe()));
+                    object.put("recipe", menu.getRecipe());
+
+                    String jsonString = object.toString();
+
+                    FileWriter fw = new FileWriter(fileToBeWrittenInto);
+                    BufferedWriter bw = new BufferedWriter(fw);
+                    bw.write(jsonString);
+                    bw.close();
+                    isSuccess = true;
+                } else {
+
+                    Log.d("debug", "Directory not exist");
+                    Log.d("debug", "Making directory:" + parentDir.getAbsolutePath() + " directory.");
+                    if (parentDir.mkdir()) {
+                        isSuccess = writeMenu(menu, counter);
+                    } else {
+                        Log.d("debug", "Failed to make directory: " + parentDir.getAbsolutePath());
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return isSuccess;
+    }
+
     public Menu getMenu(String id) {
         File parentDir = new File(this.context.getFilesDir() + FOOD_DIR);
 
@@ -168,7 +209,7 @@ public class MenuStorage {
                         if(menu != null) {
                             Log.d("debug", menu.toString());
                         }else{
-                            Log.d("debug", String.format("%s", null));
+                            Log.d("debug", "null");
                         }
                         list.add(menu);
                     }
@@ -198,6 +239,19 @@ public class MenuStorage {
             isGood = this.writeMenu(menu, 0);
         }
 
+        return isGood;
+    }
+
+    public boolean editWithIntegrityCheck(String id, String name, String description, String tag, boolean hasRecipe, String recipe){
+        boolean isGood = false;
+        File contextFilesDir = this.context.getFilesDir();
+        File file = new File(contextFilesDir, "//"+FOOD_DIR+"//"+id+".json");
+        if(name.length() > 0 && description.length() > 0 && tag.length() > 0){
+            boolean recipeReqPassed = true;
+            Log.d("debug", "recipe length:"+recipe.length()+", recipe: "+recipe);
+            Menu menu = new Menu(id, name, description, tag, hasRecipe, recipe);
+            isGood = this.writeMenu(file, menu, 0);
+        }
         return isGood;
     }
 }

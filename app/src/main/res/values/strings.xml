@@ -54,4 +54,8 @@ Faucibus interdum posuere lorem ipsum dolor. Sed odio morbi quis commodo odio ae
     <string name="btn_tambah_text">Tambah</string>
     <string name="btn_batal_text">Batal</string>
 
+    <!--Edit Menu's String-->
+    <string name="fragment_menu_edit_text">Edit Menu</string>
+    <string name="btn_simpan_text">Simpan</string>
+
 </resources>

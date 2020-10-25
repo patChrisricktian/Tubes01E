@@ -6,6 +6,8 @@
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorLightGrey">#bfb6af</color>
     <color name="colorRed">#F8286F</color>
+    <color name="colorRedWarning">#F82828</color>
+    <color name="colorRedWarning75">#BFF82828</color>
     <color name="colorBlue">#2196F3</color>
     <color name="colorGreen">#94D549</color>
     <color name="transparent">#00FFFFFF</color>

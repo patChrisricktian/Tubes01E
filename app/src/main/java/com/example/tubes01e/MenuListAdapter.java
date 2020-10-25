@@ -1,5 +1,6 @@
 package com.example.tubes01e;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +45,7 @@ public class MenuListAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
 
         if(convertView == null){
@@ -55,6 +56,18 @@ public class MenuListAdapter extends BaseAdapter {
             viewHolder.foodImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Bundle args = new Bundle();
+                    Menu menu = menuList.get(position);
+                    args.putString("id", menu.getId());
+                    args.putString("name", menu.getName());
+                    args.putString("description", menu.getDescription());
+                    args.putString("tags", menu.getTag());
+                    args.putBoolean("hasRecipe", menu.hasRecipe());
+                    args.putString("recipe", menu.getRecipe());
+
+                    activity.fragments.remove(activity.menuDetailFragment);
+                    activity.menuDetailFragment = MenuDetailFragment.newInstance(args);
+                    activity.fragments.add(activity.menuDetailFragment);
                     activity.changePage(FragmentType.FRAGMENT_MENU_DETAIL);
                 }
             });

@@ -34,6 +34,15 @@ public class MainActivityPresenter {
         return isSuccess;
     }
 
+    public boolean editMenu(String id, String name, String description, String tag, boolean hasRecipe, String recipe){
+        boolean isSuccess = this.menuStorageHandler.editWithIntegrityCheck(id, name, description, tag, hasRecipe, recipe);
+        if(isSuccess){
+            this.menus = this.menuStorageHandler.getAllMenu();
+            this.ui.updateMenuList(menus);
+        }
+        return isSuccess;
+    }
+
     public MenuListAdapter getMenuListAdapter() {
         return this.menuListAdapter;
     }

@@ -54,7 +54,7 @@
                     android:textSize="18sp" />
 
                 <TextView
-                    android:id="@+id/tv_nama_makanan_detail_text"
+                    android:id="@+id/tv_deskripsi_detail_child"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
@@ -91,7 +91,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="20dp"
-                    android:text="@string/dummy_recipe_text" />
+                    android:text="@string/dummy_text" />
             </LinearLayout>
 
         </LinearLayout>

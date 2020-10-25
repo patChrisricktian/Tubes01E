@@ -29,12 +29,13 @@ public class MainActivity extends AppCompatActivity implements FragmentListener,
     private MenuListFragment menuListFragment;
     private SettingFragment settingFragment;
     private AddMenuFragment addMenuFragment;
-    private MenuDetailFragment menuDetailFragment;
+    protected MenuDetailFragment menuDetailFragment;
+    protected MenuEditFragment menuEditFragment;
+    protected ArrayList<Fragment> fragments;
 
     private Toolbar toolbar;
     private FragmentManager fragmentManager;
     private MainActivityPresenter presenter;
-    private ArrayList<Fragment> fragments;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +61,9 @@ public class MainActivity extends AppCompatActivity implements FragmentListener,
 
         this.menuDetailFragment = new MenuDetailFragment();
         this.fragments.add(this.menuDetailFragment);
+
+        this.menuEditFragment  = new MenuEditFragment();
+        this.fragments.add(this.menuEditFragment);
 
         this.presenter = new MainActivityPresenter(this);
 
@@ -108,6 +112,9 @@ public class MainActivity extends AppCompatActivity implements FragmentListener,
             case FRAGMENT_MENU_DETAIL:
                 selectedFragment = this.menuDetailFragment;
                 break;
+            case FRAGMENT_EDIT_MENU:
+                selectedFragment = this.menuEditFragment;
+                break;
             default:
                 selectedFragment = this.mainFragment;
         }
@@ -150,6 +157,10 @@ public class MainActivity extends AppCompatActivity implements FragmentListener,
     }
     public boolean addMenu(String name, String description, String tag, boolean hasRecipe, String recipe){
         return this.presenter.addMenu( name,  description, tag,  hasRecipe,  recipe);
+    }
+
+    public boolean editMenu(String id, String name, String description, String tag, boolean hasRecipe, String recipe){
+        return this.presenter.editMenu( id, name,  description, tag,  hasRecipe,  recipe);
     }
 
     public void setMenuListAdapter(ListView listView){
