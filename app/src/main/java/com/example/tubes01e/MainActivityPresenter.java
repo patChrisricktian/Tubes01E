@@ -52,6 +52,10 @@ public class MainActivityPresenter {
         return isSuccess;
     }
 
+    public Menu randomSelectMenu(){
+        return RandomSelectMenu.select(this.menus);
+    }
+
     public MenuListAdapter getMenuListAdapter() {
         return this.menuListAdapter;
     }

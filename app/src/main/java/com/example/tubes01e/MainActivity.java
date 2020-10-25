@@ -15,6 +15,7 @@ import android.widget.ListView;
 
 import com.example.tubes01e.databinding.ActivityMainBinding;
 import com.example.tubes01e.databinding.FragmentMenuListBinding;
+import com.example.tubes01e.databinding.FragmentRandomSelectMenuBinding;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements FragmentListener,
     private AddMenuFragment addMenuFragment;
     protected MenuDetailFragment menuDetailFragment;
     protected MenuEditFragment menuEditFragment;
+    protected RandomSelectMenuFragment randomSelectMenuFragment;
     protected ArrayList<Fragment> fragments;
 
     private Toolbar toolbar;
@@ -64,6 +66,9 @@ public class MainActivity extends AppCompatActivity implements FragmentListener,
 
         this.menuEditFragment  = new MenuEditFragment();
         this.fragments.add(this.menuEditFragment);
+
+        this.randomSelectMenuFragment = new RandomSelectMenuFragment();
+        this.fragments.add(this.randomSelectMenuFragment);
 
         this.presenter = new MainActivityPresenter(this);
 
@@ -114,6 +119,9 @@ public class MainActivity extends AppCompatActivity implements FragmentListener,
                 break;
             case FRAGMENT_EDIT_MENU:
                 selectedFragment = this.menuEditFragment;
+                break;
+            case FRAGMENT_RANDOM_SELECT:
+                selectedFragment = this.randomSelectMenuFragment;
                 break;
             default:
                 selectedFragment = this.mainFragment;
@@ -167,7 +175,18 @@ public class MainActivity extends AppCompatActivity implements FragmentListener,
         return this.presenter.deleteMenu(id);
     }
 
+    public Menu randomSelectMenu(){
+        return this.presenter.randomSelectMenu();
+    }
+
     public void setMenuListAdapter(ListView listView){
         listView.setAdapter(this.presenter.getMenuListAdapter());
+    }
+
+    public void destroyFragment(Fragment fragment){
+        this.fragments.remove(fragment);
+        FragmentTransaction ft = this.fragmentManager.beginTransaction();
+        ft.remove(fragment);
+        ft.commit();
     }
 }
