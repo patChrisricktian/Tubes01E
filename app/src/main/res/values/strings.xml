@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Makenapanih</string>
+    <string name="app_name">Makan Apa</string>
     <string name="ma_text">"Another change for demonstration!"</string>
     <string name="fragment_main_text">"Main Fragment"</string>
     <string name="dummy_text">"Dummy text!"</string>

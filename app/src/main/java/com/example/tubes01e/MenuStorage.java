@@ -1,6 +1,7 @@
 package com.example.tubes01e;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 
@@ -11,6 +12,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -28,6 +30,7 @@ public class MenuStorage {
 
     public MenuStorage(Context context) {
         this.context = context;
+
     }
 
 
@@ -274,4 +277,84 @@ public class MenuStorage {
 
         return isSuccess;
     }
+
+    public void writeInitialMenuToInternalStorage(MenuPreferences menuPreferences) {
+        boolean isLoaded = menuPreferences.isLoaded();
+        Log.d("debug", String.format("%s", isLoaded));
+        if (!isLoaded) {
+            try {
+                String[] lists = context.getAssets().list("menuJSON");
+                for (String fileName : lists) {
+                    String json = "";
+                    Log.v("names", fileName);
+
+                    InputStream is = context.getAssets().open("menuJSON/"+fileName);
+                    int size = is.available();
+                    byte[] buffer = new byte[size];
+                    is.read(buffer);
+                    is.close();
+                    json = new String(buffer, "UTF-8");
+
+                    JSONObject jsonObject = new JSONObject(json);
+
+                    String nama = jsonObject.get("name").toString();
+                    String description = jsonObject.get("description").toString();
+                    String tags = jsonObject.get("tags").toString();
+                    String hasRecipeStr = jsonObject.get("hasRecipe").toString();
+                    String recipe = jsonObject.get("recipe").toString();
+
+                    boolean hasRecipe = false;
+                    if (hasRecipeStr.equals("true")) {
+                        hasRecipe = true;
+                    }
+                    writeWithIntegrityCheck(nama, description, tags, hasRecipe, recipe);
+                }
+
+                menuPreferences.loadInitialMenu();
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void loadJSONFromAsset(File file) {
+
+        if (file != null) {
+            try {
+                if (file.exists()) {
+                    FileReader fileReader = new FileReader(file);
+                    BufferedReader bufferedReader = new BufferedReader(fileReader);
+                    StringBuilder builder = new StringBuilder();
+                    String line = bufferedReader.readLine();
+
+                    while (line != null) {
+                        builder.append(line).append("\n");
+                        line = bufferedReader.readLine();
+                    }
+                    bufferedReader.close();
+
+                    String response = builder.toString();
+                    JSONObject jsonObject = new JSONObject(response);
+
+                    String nama = jsonObject.get("name").toString();
+                    String description = jsonObject.get("description").toString();
+                    String tags = jsonObject.get("tags").toString();
+                    String hasRecipeStr = jsonObject.get("hasRecipe").toString();
+                    String recipe = jsonObject.get("recipe").toString();
+
+                    boolean hasRecipe = false;
+                    if (hasRecipeStr.equals("true")) {
+                        hasRecipe = true;
+                    }
+                    writeWithIntegrityCheck(nama, description, tags, hasRecipe, recipe);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
 }
+

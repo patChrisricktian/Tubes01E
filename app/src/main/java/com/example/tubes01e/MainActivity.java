@@ -14,10 +14,7 @@ import android.util.Log;
 import android.widget.ListView;
 
 import com.example.tubes01e.databinding.ActivityMainBinding;
-import com.example.tubes01e.databinding.FragmentMenuListBinding;
-import com.example.tubes01e.databinding.FragmentRandomSelectMenuBinding;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
